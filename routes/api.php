@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\AccountController;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +10,7 @@ Route::get('/user', function () {
 });
 
 
-Route::post('/createuser', [UserAccountController::class, "registerAccount"]);
-Route::post('/updateuser', [UserAccountController::class, "updateUser"]);
-Route::post('/loginuser', [UserAccountController::class, "userLogin"]);
-Route::post('/logoutuser', [UserAccountController::class, "userlogout"])->middleware('auth:sanctum');
+Route::post('/createuser', [AccountController::class, "registerAccount"]);
+Route::post('/updateuser', [AccountController::class, "updateUser"]);
+Route::post('/loginuser', [AccountController::class, "userLogin"]);
+Route::post('/logoutuser', [AccountController::class, "userlogout"])->middleware('auth:sanctum');
