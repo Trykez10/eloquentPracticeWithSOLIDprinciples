@@ -2,27 +2,29 @@
 
 namespace App\Services;
 
-use App\Interface\AuthService;
-use App\Models\UserModel;
 use Auth;
+use App\Models\PostModel;
+use App\Models\UserModel;
 use AuthenticationService;
+use App\Interface\AuthService;
+use App\Interface\PostService;
 use Illuminate\Support\Facades\Hash;
 
-class UserAccountServices implements AuthService
+class UserAccountServices implements AuthService, PostService
 {
-    // public function createUser(array $data)
-    // {
-    //     $user = UserModel::create($data);
-    //     return $user;
-    // }
+    public function createUser(array $data)
+    {
+        $user = UserModel::create($data);
+        return $user;
+    }
 
-    // public function updateUser(array $data, $id)
-    // {
-    //     $updateUser = UserModel::find($id);
-    //     $updateUser->update($data);
+    public function updateUser(array $data, $id)
+    {
+        $updateUser = UserModel::find($id);
+        $updateUser->update($data);
 
-    //     return $updateUser;
-    // }
+        return $updateUser;
+    }
 
     public function attemplogin(array $data): ?UserModel
     {
@@ -39,6 +41,18 @@ class UserAccountServices implements AuthService
         $user = Auth::user();
 
         $user->tokens()->delete();
+    }
+
+    public function createPost(array $data)
+    {
+        $user = Auth::user();
+
+        $post = PostModel::create([
+            'user_id' => $user->id,
+            'title' => $data['title'],
+            'body' => $data['body'],
+        ]);
+        return $post;
     }
 
 

@@ -27,4 +27,11 @@ class UserModel extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    //Relationship
+
+    public function posts()
+    {
+        return $this->hasMany(PostModel::class, 'user_id');
+    }
 }

@@ -8,8 +8,8 @@ class AuthenticationService
 {
     protected array $validations;
 
-                                // 0 => UserAccountServices $validation
-                                // 1 = AdminAccountServices $validation
+    // 0 => UserAccountServices $validation
+    // 1 = AdminAccountServices $validation
     public function __construct(array $validations)
     {
         $this->validations = $validations;
@@ -42,5 +42,40 @@ class AuthenticationService
         $user->tokens()->delete();
 
         return response()->json(["message" => "Goodbye! Logging out"]);
+    }
+
+    public function registerUser(array $data)
+    {
+        foreach ($this->validations as $validation) {
+            $account = $validation->createUser($data);
+            if ($account) {
+                return response()->json(["message" => "You are now registered!"]);
+            }
+        }
+        return response()->json(["message" => "Registration failed"], 400);
+    }
+
+    public function updateUser(array $data, $id)
+    {
+        foreach ($this->validations as $validation) {
+            $account = $validation->updateUser($data, $id);
+
+            if ($account) {
+                return response()->json(["message" => "Data has been updated!", "updated data" => $account]);
+            }
+        }
+        return response()->json(["message" => "Update failed"], 400);
+    }
+
+    public function createPost(array $data)
+    {
+        foreach ($this->validations as $validation) {
+            $account = $validation->createPost($data);
+
+            if ($account) {
+                return response()->json(["message" => "Post created successfully!", "post" => $account]);
+            }
+        }
+        return response()->json(["message" => "Post creation failed"], 400);
     }
 }
