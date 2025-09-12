@@ -9,11 +9,12 @@ class PostModel extends Model
 {
     use HasApiTokens;
     protected $table = 'user_post';
+    protected $primaryKey = 'post_id';
     protected $fillable = ['user_id', 'title', 'body'];
 
     // Relationships
     public function user()
     {
-        return $this->belongsTo(UserModel::class, 'user_id');
+        return $this->belongsTo(UserModel::class, 'user_id', 'id');
     }
 }

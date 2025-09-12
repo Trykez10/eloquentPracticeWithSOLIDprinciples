@@ -61,21 +61,11 @@ class AuthenticationService
             $account = $validation->updateUser($data, $id);
 
             if ($account) {
-                return response()->json(["message" => "Data has been updated!", "updated data" => $account]);
+                return $account;
             }
         }
         return response()->json(["message" => "Update failed"], 400);
     }
 
-    public function createPost(array $data)
-    {
-        foreach ($this->validations as $validation) {
-            $account = $validation->createPost($data);
 
-            if ($account) {
-                return response()->json(["message" => "Post created successfully!", "post" => $account]);
-            }
-        }
-        return response()->json(["message" => "Post creation failed"], 400);
-    }
 }

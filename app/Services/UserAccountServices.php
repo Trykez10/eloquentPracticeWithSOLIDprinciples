@@ -43,6 +43,7 @@ class UserAccountServices implements AuthService, PostService
         $user->tokens()->delete();
     }
 
+    //POSTS
     public function createPost(array $data)
     {
         $user = Auth::user();
@@ -52,6 +53,33 @@ class UserAccountServices implements AuthService, PostService
             'title' => $data['title'],
             'body' => $data['body'],
         ]);
+        return $post;
+    }
+
+    public function deletePost($id)
+    {
+        $post = PostModel::findOrFail($id);
+        $post->delete();
+        return $post;
+    }
+
+    public function updatePost(array $data, $id)
+    {
+        $post = PostModel::findOrFail($id);
+        $post->update($data);
+        return $post;
+
+    }
+
+    public function getPostLists()
+    {
+        $user = Auth::user();
+
+        $post = PostModel::with('user')->where('user_id', $user->id)->get();
+
+        if ($post->isEmpty()) {
+            return response()->json(["message" => "You have no posts like that."], 200);
+        }
         return $post;
     }
 

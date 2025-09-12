@@ -31,8 +31,8 @@ class AccountController extends Controller
     {
         $updateRequest = $update->validated();
         //Auth::user()->id() 
-        $a = $this->services->updateUser($updateRequest, 1);
-        return response()->json(["message" => "Data has been updated!", "updated data" => $a]);
+        $user = $this->services->updateUser($updateRequest, 1);
+        return response()->json(["message" => "Data has been updated!", "updated data" => $user]);
     }
 
     public function userLogin(LoginRequest $loginRequest)
@@ -46,19 +46,5 @@ class AccountController extends Controller
         return $this->services->logout();
     }
 
-
-    //POST CONTROLLER METHODS
-
-    public function createPost(PostRequest $postRequest)
-    {
-        $fields = $postRequest->validated();
-
-        if (Auth::check()) {
-            return $this->services->createPost($fields);
-        }
-
-        return response()->json(["message" => "Unauthorized"], 401);
-
-    }
 }
 
