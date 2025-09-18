@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProcessUpdateTask;
 use App\Models\PostModel;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserAccountServices;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Process;
 
 class UserPostController extends Controller
 {
@@ -46,8 +49,14 @@ class UserPostController extends Controller
         $fields = $request->validated();
 
         if (Auth::check()) {
+
+            $post = PostModel::find($id);
+            $oldval = $post->title;
             $this->services->updatePost($fields, $id);
-            return response()->json(["message" => "Post updated successfully!"], 200);
+
+            event(new ProcessUpdateTask($post, $fields));
+
+            return response()->json(["message" => "Post updated successfully"], 200);
         }
 
         return response()->json(["message" => "A problem exists during compilation"], 404);
@@ -58,5 +67,6 @@ class UserPostController extends Controller
     {
         $post = $this->services->getPostLists();
         return response()->json(["Here's the lists of your posts: ", $post], 200);
+
     }
 }

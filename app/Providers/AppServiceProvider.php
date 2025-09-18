@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AuthenticationService::class, function ($app) {
             return new AuthenticationService([
                 $app->make(UserAccountServices::class),
+                // If you have another class to inject, you can add it here. Like the AdminAccountServices
             ]);
         });
     }
