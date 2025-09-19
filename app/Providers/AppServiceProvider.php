@@ -21,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
                 // If you have another class to inject, you can add it here. Like the AdminAccountServices
             ]);
         });
+
+
     }
 
     /**

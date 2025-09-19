@@ -3,9 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\ProcessUpdateTask;
+use App\Mail\UpdatePostMail;
 use Carbon\Traits\ToStringFormat;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendUpdateMessage
 {
@@ -25,7 +27,8 @@ class SendUpdateMessage
         $posts = $event->data;
         $upd = $event->updates;
 
+        $email = $posts->user->email;
 
-        echo "From Email: Your post " . $posts->title . " has been updated to " . implode($upd) . "\n";
+        Mail::to($email)->send(new UpdatePostMail($posts, $upd));
     }
 }

@@ -51,7 +51,6 @@ class UserPostController extends Controller
         if (Auth::check()) {
 
             $post = PostModel::find($id);
-            $oldval = $post->title;
             $this->services->updatePost($fields, $id);
 
             event(new ProcessUpdateTask($post, $fields));
