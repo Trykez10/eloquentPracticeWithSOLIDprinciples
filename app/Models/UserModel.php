@@ -32,6 +32,6 @@ class UserModel extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(PostModel::class, 'user_id', 'id');
+        return $this->hasMany(TaskModel::class, 'user_id', 'id');
     }
 }

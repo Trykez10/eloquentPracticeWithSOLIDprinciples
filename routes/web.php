@@ -9,8 +9,8 @@ Route::get('/', function () {
 
 // Route::get('/test-mail', function () {
 //     Mail::raw('Test Mailgun', function ($message) {
-//         $message->to('tristanmalubay10@gmail.com')
-//             ->subject('Mailgun Test');
+//         $message->to('salementemaria05@gmail.com')->to('mdwn5621@gmail.com')
+//             ->subject('TESTING MAMSER')->html("<h1>SEND GCASH TAG PISO PANG SAMGYUP</h1>");
 //     });
 
 //     return 'Sent!';

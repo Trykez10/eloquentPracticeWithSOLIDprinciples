@@ -4,6 +4,7 @@ namespace App\Mail;
 
 use App\Listeners\SendUpdateMessage;
 use App\Models\PostModel;
+use App\Models\TaskModel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -19,7 +20,7 @@ class UpdatePostMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public PostModel $posts, public array $sendUpdateMessage)
+    public function __construct(public TaskModel $posts, public array $sendUpdateMessage)
     {
         //
     }

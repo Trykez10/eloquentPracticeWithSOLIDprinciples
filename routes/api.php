@@ -16,7 +16,7 @@ Route::put('/updateuser', [AccountController::class, "updateUser"]);
 Route::post('/loginuser', [AccountController::class, "userLogin"]);
 Route::post('/logoutuser', [AccountController::class, "userlogout"])->middleware('auth:sanctum');
 
-Route::post('/createpost', [UserPostController::class, "createPost"])->middleware('auth:sanctum');
-Route::put('/updatepost/{id}', [UserPostController::class, "updatePost"])->middleware('auth:sanctum');
-Route::delete('/post/{id}', [UserPostController::class, "deletePost"])->middleware('auth:sanctum');
+Route::post('/createtask', [UserPostController::class, "createTask"])->middleware('auth:sanctum');
+Route::put('/updatetask/{id}', [UserPostController::class, "updateTask"])->middleware('auth:sanctum');
+Route::delete('/deletetask/{id}', [UserPostController::class, "deleteTask"])->middleware('auth:sanctum');
 Route::get('/myposts', [UserPostController::class, "myPosts"])->middleware('auth:sanctum');

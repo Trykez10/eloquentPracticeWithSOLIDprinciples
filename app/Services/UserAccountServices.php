@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Interface\TaskService;
+use App\Models\TaskModel;
 use Auth;
 use App\Models\PostModel;
 use App\Models\UserModel;
 use AuthenticationService;
 use App\Interface\AuthService;
-use App\Interface\PostService;
 use Illuminate\Support\Facades\Hash;
 
-class UserAccountServices implements AuthService, PostService
+class UserAccountServices implements AuthService, TaskService
 {
     public function createUser(array $data)
     {
@@ -48,24 +49,24 @@ class UserAccountServices implements AuthService, PostService
     {
         $user = Auth::user();
 
-        $post = PostModel::create([
+        $post = TaskModel::create([
             'user_id' => $user->id,
-            'title' => $data['title'],
-            'body' => $data['body'],
+            'task_title' => $data['task_title'],
+            'task_content' => $data['task_content'],
         ]);
         return $post;
     }
 
     public function deletePost($id)
     {
-        $post = PostModel::findOrFail($id);
+        $post = TaskModel::findOrFail($id);
         $post->delete();
         return $post;
     }
 
     public function updatePost(array $data, $id)
     {
-        $post = PostModel::findOrFail($id);
+        $post = TaskModel::findOrFail($id);
         $post->update($data);
         return $post;
 
@@ -75,10 +76,10 @@ class UserAccountServices implements AuthService, PostService
     {
         $user = Auth::user();
 
-        $post = PostModel::with('user')->where('user_id', $user->id)->get();
+        $post = TaskModel::with('user')->where('user_id', $user->id)->get();
 
         if ($post->isEmpty()) {
-            return response()->json(["message" => "You have no posts like that."], 200);
+            return response()->json(["message" => "You have no task like that."], 200);
         }
         return $post;
     }

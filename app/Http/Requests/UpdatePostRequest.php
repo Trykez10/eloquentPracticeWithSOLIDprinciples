@@ -25,6 +25,7 @@ class UpdatePostRequest extends FormRequest
         return [
             "title" => ["sometimes", "string", "max:255"],
             "body" => ["sometimes", "string", "max:255"],
+            "status" => ["sometimes", "string", "in:pending,on-going,completed"]
         ];
     }
 }

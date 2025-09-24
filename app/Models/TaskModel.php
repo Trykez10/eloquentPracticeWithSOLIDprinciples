@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
-class PostModel extends Model
+class TaskModel extends Model
 {
     use HasApiTokens;
-    protected $table = 'user_post';
-    protected $primaryKey = 'post_id';
-    protected $fillable = ['user_id', 'title', 'body'];
+    protected $table = 'user_tasks';
+    protected $primaryKey = 'task_id';
+    protected $fillable = ['user_id', 'task_title', 'task_content', 'status'];
 
     // Relationships
     public function user()

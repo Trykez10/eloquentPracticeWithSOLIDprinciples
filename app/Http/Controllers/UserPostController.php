@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\ProcessUpdateTask;
-use App\Models\PostModel;
+use App\Models\TaskModel;
+use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\PostTaskRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserAccountServices;
@@ -22,7 +23,7 @@ class UserPostController extends Controller
         $this->services = $services;
     }
 
-    public function createPost(PostRequest $postRequest)
+    public function createTask(PostTaskRequest $postRequest)
     {
         $fields = $postRequest->validated();
 
@@ -34,28 +35,28 @@ class UserPostController extends Controller
 
     }
 
-    public function deletePost($id)
+    public function deleteTask($id)
     {
         if (Auth::check()) {
             $post = $this->services->deletePost($id);
-            return response()->json(["Post deleted successfully!", "post" => $post], 200);
+            return response()->json(["Task deleted successfully!", "post" => $post], 200);
         }
 
         return response()->json(["message" => "Unauthorized"], 401);
     }
 
-    public function updatePost(UpdatePostRequest $request, $id)
+    public function updateTask(UpdatePostRequest $request, $id)
     {
         $fields = $request->validated();
 
         if (Auth::check()) {
 
-            $post = PostModel::find($id);
+            $post = TaskModel::find($id);
             $this->services->updatePost($fields, $id);
 
-            event(new ProcessUpdateTask($post, $fields));
+            // event(new ProcessUpdateTask($post, $fields));
 
-            return response()->json(["message" => "Post updated successfully"], 200);
+            return response()->json(["message" => "Task updated successfully"], 200);
         }
 
         return response()->json(["message" => "A problem exists during compilation"], 404);

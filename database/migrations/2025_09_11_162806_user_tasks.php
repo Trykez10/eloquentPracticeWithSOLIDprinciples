@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_post', function (Blueprint $table) {
-            $table->increments('post_id');
+        Schema::create('user_tasks', function (Blueprint $table) {
+            $table->increments('task_id');
             $table->foreignId('user_id')->constrained('useraccount', 'id')->onDelete('cascade');
-            $table->string('title');
-            $table->text('body');
+            $table->string('task_title');
+            $table->text('task_content');
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\PostModel;
+use App\Models\TaskModel;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -18,7 +19,7 @@ class ProcessUpdateTask
     public $data;
     public $oldVal;
     public $updates;
-    public function __construct(PostModel $data, array $updates)
+    public function __construct(TaskModel $data, array $updates)
     {
         $this->data = $data;
         $this->updates = $updates;
